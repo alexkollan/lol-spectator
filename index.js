@@ -4,6 +4,8 @@ const fs = require('fs');
 const path = require('path');
 require('dotenv').config();
 const batTemplate = require('./batTemplate');
+const { exec } = require('child_process');
+// const command = require('./command');
 
 
 const apiKey = process.env.API_KEY;
@@ -64,11 +66,29 @@ function launchSpectatorMode(gameId, platformId, encryptionKey) {
       });
   
       batProcess.unref();
+
+      setTimeout(() => {
+        fs.unlink(batFilePath, (err) => {
+          if (err) {
+            console.error(`Error deleting bat file: ${err}`);
+          }
+        });
+      }, 5000); // Adjust the delay as needed
+
+
+
+      const checkGameLaunch = () => {
+        // to be developed
+      };
+
+
     } else {
       console.log('Spectator mode launch not supported on this platform.');
     }
   }
   
+
+
 
 
 async function main() {
